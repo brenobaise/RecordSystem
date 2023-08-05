@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
 
@@ -28,7 +27,7 @@ public class SystemManager {
     // List of module objects
     private ArrayList<Module> moduleRecords = new ArrayList<>();
 
-    // Getters
+
     /**
      * Constructor for the system.
      * Initializes the Scanner Object for the SystemManager class
@@ -37,6 +36,9 @@ public class SystemManager {
 
         this.scanner = new Scanner(System.in);
     }
+
+
+            /* Getters */
 
     /**
      * Getter method for storing the Student Objects
@@ -58,7 +60,8 @@ public class SystemManager {
         return moduleRecords;
     }
 
-    // Array CRUD
+
+            /* Array CRUD */
 
     /**
      * Searches for a Student Object based on a studentID
@@ -119,7 +122,9 @@ public class SystemManager {
         }
     }
 
-    // System Methods
+
+            /* System Methods */
+
     /**
      * Validates a String from the user.
      * Restrictions : Upper to lower case  A - z, and digits from 0 to 9.
@@ -170,7 +175,6 @@ public class SystemManager {
 
         return digit;
     }
-
 
     /**
      * A generic method to search for an Object attribute in a list.
