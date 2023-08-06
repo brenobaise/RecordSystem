@@ -126,6 +126,33 @@ public class SystemManager {
             /* System Methods */
 
     /**
+     * Starts the application
+     */
+    public void run() {
+        int userSelection;
+        MenuOptions selectedOption;
+        boolean isValid = false;
+
+
+        System.out.println("Welcome to the Student Record System!");
+        System.out.println("What would you like to do ?");
+
+        do{
+            userSelection = getUserInt();
+            try {
+                selectedOption = MenuOptions.values()[userSelection - 1];
+                menu(selectedOption);
+                isValid = true;
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid option. Please try again.");
+            }
+
+        }while (!isValid);
+
+
+    }
+    /**
      * Validates a String from the user.
      * Restrictions : Upper to lower case  A - z, and digits from 0 to 9.
      *
@@ -152,7 +179,7 @@ public class SystemManager {
 
     /**
      * Validates an int from the user.
-     * Requirements: The regex pattern "\\d+" matches one or more digits (0-9).
+     * Requirements: The regex pattern  matches one or more digits ([1-9]).
      * Age restriction >= 0 and <= 100
      *
      * @return the validated int.
@@ -163,13 +190,15 @@ public class SystemManager {
 
         do {
             String input = scanner.nextLine();
-            isValid = input.matches("\\d+");
+            isValid = input.matches("[1-9]");
 
             if (isValid) {
                 digit = Integer.parseInt(input);
-                isValid = digit >= 0 && digit <= 100;
+                isValid = digit >= 1 && digit <= 100;
+            }else {
+                System.out.println("[SYSTEM] >>> Invalid Input");
+
             }
-            System.out.println("[SYSTEM] >>> Invalid Input");
 
         } while (!isValid);
 
@@ -207,47 +236,58 @@ public class SystemManager {
     }
 
 
-    public void menu(int key){
-        switch (key) {
-            case 0 -> System.exit(200);
-            case 1 -> {
-                // Add a new student record
-                // this option should allow the user to input a new student's information and
-                //add it to the array of student records.
-                String studentName = getUserString("Input Student Name: ");
-                String studentID = getUserString("Input Student ID: ");
-                createStudent(studentName, studentID);
+    public void menu(MenuOptions selectedOption) {
 
-            }
-            case 2 -> {
-                // add a new module
-                String moduleName = getUserString("Input Module Name: ");
-                String moduleID = getUserString("Input Module ID: ");
-                createModule(moduleName, moduleID);
-            }
-            case 3 ->
-                // enrol a student to a module
 
+            switch (selectedOption) {
+                case ADD_STUDENT -> {
+                    // Add a new student record
+                    // this option should allow the user to input a new student's information and
+                    //add it to the array of student records.
+                    String studentName = getUserString("Input Student Name: ");
+                    String studentID = getUserString("Input Student ID: ");
+                    createStudent(studentName, studentID);
+
+                }
+                case ADD_MODULE -> {
+                    // add a new module
+                    String moduleName = getUserString("Input Module Name: ");
+                    String moduleID = getUserString("Input Module ID: ");
+                    createModule(moduleName, moduleID);
+                }
+                case ENROLL_STUDENT -> {
+                    // enrol a student to a module
+                    enrollStudent();
                     System.out.println("3");
-            case 4 ->
-                // add a mark
+                }
+                case ADD_MARK -> {
+                    // add a mark
                     System.out.println("4");
-            case 5 -> {
-                // Display all student records
-                System.out.println("5");
-                viewStudentRecords();
-                viewModuleRecords();
-            }
-            case 6 ->
-                // Display a specific student record
+                }
+                case VIEW_ALL_RECORDS -> {
+                    // Display all student records
+                    System.out.println("5");
+                    viewStudentRecords();
+                    viewModuleRecords();
+                }
+                case VIEW_STUDENT_RECORD -> {
+                    // Display a specific student record
                     System.out.println("6");
-            case 7 ->
-                // Calculate the final mark of a specific student
+                }
+                case CALCULATE_FINAL_MARK -> {
+                    // Calculate the final mark of a specific student
                     System.out.println("7");
-            case 8 ->
-                // Calculate the average of all students
-                    System.out.println("8");
-        }
+                }
+                case CALCULATE_AVERAGE -> {
+                    // Calculate the average of all students
+                    System.out.println("Hello");
+                }
+                case EXIT -> {
+                    System.exit(200);
+                    getStudentRecords().clear();
+                    getModuleRecords().clear();
+                }
+            }
     }
 
     /**
@@ -266,8 +306,6 @@ public class SystemManager {
         getStudentRecords().add(newStudent);
         System.out.println("[SYSTEM] >>> Student added to records.");
 
-//        System.out.println(validateObject(getStudentRecords(), "w123", Student::getStudentID));
-
     }
 
     /**
@@ -285,31 +323,38 @@ public class SystemManager {
         Module newModule = new Module(moduleName, moduleID);
         getModuleRecords().add(newModule);
         System.out.println("[SYSTEM >>> Module added to records.]");
-
-
     }
 
-    public void enrolStudent(){
+    public void enrollStudent() {
+        String studentID = null;
+        String moduleID = null;
 
-        String studentID = getUserString("Insert StudentID: ");
-        if(!validateObject(getStudentRecords(), studentID, Student::getStudentID)){
-            System.out.println("[SYSTEM] >>> Student does not exist.");
+        boolean validStudent = false;
+        boolean validModule = false;
+
+        while (!validStudent || !validModule) {
+             studentID = getUserString("Insert StudentID: ");
+            if (!validateObject(getStudentRecords(), studentID, Student::getStudentID)) {
+                System.out.println("[SYSTEM] >>> Student not found.");
+            } else {
+                validStudent = true;
+            }
+
+             moduleID = getUserString("Insert ModuleID: ");
+            if (!validateObject(getModuleRecords(), moduleID, Module::getModuleID)) {
+                System.out.println("[SYSTEM] >>> Module not found.");
+            } else {
+                validModule = true;
+            }
         }
-
-        String moduleID = getUserString("Insert ModuleID: ");
-        if(!validateObject(getModuleRecords(), moduleID, Module::getModuleID)){
-            System.out.println("[SYSTEM] >>> Module does not exist.");
-        }
-
 
         // GET the object of the specified ID's
         Module module = getModule(moduleID);
         Student student = getStudent(studentID);
 
         // Enroll the student to the module
-        module.enrollStudent(student);
+        module.addStudent(student);
         System.out.println("[SYSTEM] >>> Student" + student.getStudentID() + " enrolled to Module: " +
                 module.getModuleName());
-
     }
 }
