@@ -1,3 +1,5 @@
+package com.studentmanagement.model;
+
 import java.util.ArrayList;
 
 public class Student {

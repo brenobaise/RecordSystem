@@ -1,7 +1,10 @@
+package com.studentmanagement.util;
+
 import java.util.zip.ZipError;
 
 public class UtilityMaths {
     private UtilityMaths() {
+        /* Enforces that this class is not initiated.*/
         throw new UnsupportedOperationException("Utility class, should not be instantiated.");
     }
 

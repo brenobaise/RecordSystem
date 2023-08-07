@@ -1,17 +1,24 @@
+package com.studentmanagement;
+
+import com.studentmanagement.model.Student;
+import com.studentmanagement.model.Module;
+import com.studentmanagement.util.UtilityMaths;
+import com.studentmanagement.MenuOptions;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Function;
 
 /**
- * <p>The SystemManager class represents a student record management system
+ * <p>The com.studentmanagement.SystemManager class represents a student record management system
  * that allows adding, viewing, and manipulating student and module records.
  * It provides methods for validating user input and performing CRUD operations
  * on the student and module records.</p>
  *
  *<br>
- * <p>Student and module records are stored in separate ArrayLists, and students
- * are represented by objects of the Student class, while Modules are represented
- * by objects of the Module class. The SystemManager class offers initializer
+ * <p>com.studentmanagement.model.Student and module records are stored in separate ArrayLists, and students
+ * are represented by objects of the com.studentmanagement.model.Student class, while Modules are represented
+ * by objects of the com.studentmanagement.model.Module class. The com.studentmanagement.SystemManager class offers initializer
  * methods createStudent() and createModule() to add new student and module records
  * respectively to their corresponding ArrayLists.</p>
  *
@@ -30,7 +37,7 @@ public class SystemManager {
 
     /**
      * Constructor for the system.
-     * Initializes the Scanner Object for the SystemManager class
+     * Initializes the Scanner Object for the com.studentmanagement.SystemManager class
      */
     public SystemManager(){
 
@@ -41,7 +48,7 @@ public class SystemManager {
             /* Getters */
 
     /**
-     * Getter method for storing the Student Objects
+     * Getter method for storing the com.studentmanagement.model.Student Objects
      *
      * @return the Arraylist of Students
      */
@@ -51,7 +58,7 @@ public class SystemManager {
     }
 
     /**
-     * Getter method for the array storing Module Objects
+     * Getter method for the array storing com.studentmanagement.model.Module Objects
      *
      * @return the Arraylist of Modules
      */
@@ -64,9 +71,9 @@ public class SystemManager {
             /* Array CRUD */
 
     /**
-     * Searches for a Student Object based on a studentID
+     * Searches for a com.studentmanagement.model.Student Object based on a studentID
      * @param studentID The key to be searched within the StudentRecords
-     * @return the Object of the searched Student.
+     * @return the Object of the searched com.studentmanagement.model.Student.
      */
     private Student getStudent(String studentID){
         Student target = null;
@@ -96,7 +103,7 @@ public class SystemManager {
     /**
      * Searches for a module based on a moduleID
      * @param moduleID The key to be searched within the ModuleRecords
-     * @return the Object of the searched Module.
+     * @return the Object of the searched com.studentmanagement.model.Module.
      */
     private Module getModule(String moduleID){
         Module target = null;
@@ -134,7 +141,7 @@ public class SystemManager {
         boolean isValid = false;
 
 
-        System.out.println("Welcome to the Student Record System!");
+        System.out.println("Welcome to the com.studentmanagement.model.Student Record System!");
         System.out.println("What would you like to do ?");
         printMenu();
 
@@ -159,7 +166,7 @@ public class SystemManager {
      */
     private static void printMenu() {
         String menu = """
-                =========== Student Management System ===========
+                =========== com.studentmanagement.model.Student Management System ===========
                 1. Add a new student record
                 2. Add a new module
                 3. Enrol a student to a module
@@ -237,7 +244,7 @@ public class SystemManager {
      * @param target The attribute to be searched.
      * @param getter The getter method of that Object
      * @return True/False based on the validation
-     * @param <T> Generic Type of the ArrayList<>   Ex. Module/Student
+     * @param <T> Generic Type of the ArrayList<>   Ex. com.studentmanagement.model.Module/com.studentmanagement.model.Student
      * @param <R> Generic Type of the target.       Ex. Integer/String
      * @see Function
      */
@@ -266,15 +273,15 @@ public class SystemManager {
                     // Add a new student record
                     // this option should allow the user to input a new student's information and
                     //add it to the array of student records.
-                    String studentName = getUserString("Input Student Name: ");
-                    String studentID = getUserString("Input Student ID: ");
+                    String studentName = getUserString("Input com.studentmanagement.model.Student Name: ");
+                    String studentID = getUserString("Input com.studentmanagement.model.Student ID: ");
                     createStudent(studentName, studentID);
 
                 }
                 case ADD_MODULE -> {
                     // add a new module
-                    String moduleName = getUserString("Input Module Name: ");
-                    String moduleID = getUserString("Input Module ID: ");
+                    String moduleName = getUserString("Input com.studentmanagement.model.Module Name: ");
+                    String moduleID = getUserString("Input com.studentmanagement.model.Module ID: ");
                     createModule(moduleName, moduleID);
                 }
                 case ENROLL_STUDENT -> {
@@ -313,51 +320,51 @@ public class SystemManager {
     }
 
     /**
-     * Initializer method for creating a Student Object.
+     * Initializer method for creating a com.studentmanagement.model.Student Object.
      *
-     * <p>This method creates a generic Student Object, and
+     * <p>This method creates a generic com.studentmanagement.model.Student Object, and
      * assigns the params to the Object.</p>
      * Once the Object has been created, it's added to the studentRecords Array.
      *
-     * @param name The name for the Student Object.
-     * @param studentID The unique identifier for the Student Object.
+     * @param name The name for the com.studentmanagement.model.Student Object.
+     * @param studentID The unique identifier for the com.studentmanagement.model.Student Object.
      */
     private void createStudent(String name, String studentID){
 
         Student newStudent = new Student(name, studentID);
         getStudentRecords().add(newStudent);
-        System.out.println("[SYSTEM] >>> Student added to records.");
+        System.out.println("[SYSTEM] >>> com.studentmanagement.model.Student added to records.");
 
     }
 
     /**
-     * Initializer method for creating a Module Object.
+     * Initializer method for creating a com.studentmanagement.model.Module Object.
      *
-     * <p>This method creates a generic Module Object, and
+     * <p>This method creates a generic com.studentmanagement.model.Module Object, and
      * assigns the params to the Object.</p>
      * Once the Object has been created, it's added to the moduleRecords Array.
      *
-     * @param moduleName The name for the Module Object.
-     * @param moduleID The unique identifier for the Module Object.
+     * @param moduleName The name for the com.studentmanagement.model.Module Object.
+     * @param moduleID The unique identifier for the com.studentmanagement.model.Module Object.
      */
     private void createModule(String moduleName, String moduleID) {
 
         Module newModule = new Module(moduleName, moduleID);
         getModuleRecords().add(newModule);
-        System.out.println("[SYSTEM >>> Module added to records.]");
+        System.out.println("[SYSTEM >>> com.studentmanagement.model.Module added to records.]");
     }
 
     /**
      * Validates an ID based on the object type and prompt provided.
      * <p>
-     * This method is used to validate a given ID based on the object type (Student or Module).
+     * This method is used to validate a given ID based on the object type (com.studentmanagement.model.Student or com.studentmanagement.model.Module).
      * It prompts the user to enter the ID and checks if it exists in the corresponding records (student or module records).
      * If the ID is not found in the records, it prompts the user to re-enter the ID until a valid one is provided.
      * </p>
      *
-     * @param objectID The object type (Student or Module) to determine which records to search.
-     * @param prompt   The prompt to be displayed to the user when entering the ID (e.g., "Student ID" or "Module ID").
-     * @param <T>      The generic type representing the object type (Student or Module).
+     * @param objectID The object type (com.studentmanagement.model.Student or com.studentmanagement.model.Module) to determine which records to search.
+     * @param prompt   The prompt to be displayed to the user when entering the ID (e.g., "com.studentmanagement.model.Student ID" or "com.studentmanagement.model.Module ID").
+     * @param <T>      The generic type representing the object type (com.studentmanagement.model.Student or com.studentmanagement.model.Module).
      * @return The valid ID that exists in the records.
      * @see Student
      * @see Module
@@ -370,7 +377,7 @@ public class SystemManager {
             while (isValid) {
                 possibleID = getUserString("Insert " + prompt);
                 if (!validateObject(getStudentRecords(), possibleID, Student::getStudentID)) {
-                    System.out.println("[SYSTEM] >>> Student not found.");
+                    System.out.println("[SYSTEM] >>> com.studentmanagement.model.Student not found.");
                     isValid = false;
                 }
             }
@@ -380,7 +387,7 @@ public class SystemManager {
             while (isValid) {
                 possibleID = getUserString("Insert " + prompt);
                 if (!validateObject(getModuleRecords(), possibleID, Module::getModuleID)) {
-                    System.out.println("[SYSTEM] >>> Module not found.");
+                    System.out.println("[SYSTEM] >>> com.studentmanagement.model.Module not found.");
                     isValid = false;
                 }
             }
@@ -403,7 +410,7 @@ public class SystemManager {
 
         // Enroll the student to the module
         module.addStudent(student);
-        System.out.println("[SYSTEM] >>> Student" + student.getStudentID() + " enrolled to Module: " +
+        System.out.println("[SYSTEM] >>> com.studentmanagement.model.Student" + student.getStudentID() + " enrolled to com.studentmanagement.model.Module: " +
                 module.getModuleName());
     }
 

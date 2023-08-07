@@ -1,3 +1,5 @@
+package com.studentmanagement;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

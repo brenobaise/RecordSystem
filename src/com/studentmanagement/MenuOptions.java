@@ -1,3 +1,5 @@
+package com.studentmanagement;
+
 public enum MenuOptions {
     ADD_STUDENT,
     ADD_MODULE,

@@ -1,7 +1,9 @@
+package com.studentmanagement.model;
+
 import java.util.HashMap;
 
 /**
- *The Module class represents a module in a student record management system.
+ *The com.studentmanagement.model.Module class represents a module in a student record management system.
  * <p>It stores information about a specific module, including its name, ID, and the students enrolled in the module along with their grades.</p>
  */
 public class Module {
@@ -15,7 +17,7 @@ public class Module {
             /*  Constructors */
 
     /**
-     * Constructor for a Module without ID.
+     * Constructor for a com.studentmanagement.model.Module without ID.
      * @param moduleName The name of the module.
      */
     public Module(String moduleName){
@@ -23,7 +25,7 @@ public class Module {
     }
 
     /**
-     * Constructor for a Module with ID.
+     * Constructor for a com.studentmanagement.model.Module with ID.
      * @param moduleName The name of the module.
      * @param moduleID The ID of the module.
      */
@@ -51,7 +53,7 @@ public class Module {
     }
 
     /**
-     * Getter for the HashMap storing the Student object and it's grade.
+     * Getter for the HashMap storing the com.studentmanagement.model.Student object and it's grade.
      * @return the HashMap object.
      */
     public HashMap<Student, Double> getStudentsEnrolled() {
@@ -61,7 +63,7 @@ public class Module {
             /* Array CRUD */
 
     /**
-     * Adds a Student to the student records Array without a grade
+     * Adds a com.studentmanagement.model.Student to the student records Array without a grade
      * @param student The student to be added.
      */
     public void addStudent(Student student){
@@ -69,7 +71,7 @@ public class Module {
     }
 
     /**
-     * Adds a Student to the student records Array with a grade
+     * Adds a com.studentmanagement.model.Student to the student records Array with a grade
      * @param student The student to be added.
      * @param grade The grade to be added.
      */
