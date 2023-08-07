@@ -45,7 +45,7 @@ public class SystemManager {
      *
      * @return the Arraylist of Students
      */
-    public ArrayList<Student> getStudentRecords() {
+    private ArrayList<Student> getStudentRecords() {
 
         return studentRecords;
     }
@@ -55,7 +55,7 @@ public class SystemManager {
      *
      * @return the Arraylist of Modules
      */
-    public ArrayList<Module> getModuleRecords() {
+    private ArrayList<Module> getModuleRecords() {
 
         return moduleRecords;
     }
@@ -68,7 +68,7 @@ public class SystemManager {
      * @param studentID The key to be searched within the StudentRecords
      * @return the Object of the searched Student.
      */
-    public Student getStudent(String studentID){
+    private Student getStudent(String studentID){
         Student target = null;
 
         for (Student student:
@@ -83,7 +83,7 @@ public class SystemManager {
     /**
      * Displays all students within the system.
      */
-    public void viewStudentRecords(){
+    private void viewStudentRecords(){
 
         for (Student student:
              getStudentRecords()) {
@@ -98,7 +98,7 @@ public class SystemManager {
      * @param moduleID The key to be searched within the ModuleRecords
      * @return the Object of the searched Module.
      */
-    public Module getModule(String moduleID){
+    private Module getModule(String moduleID){
         Module target = null;
         for (Module module:
              getModuleRecords()) {
@@ -112,7 +112,7 @@ public class SystemManager {
     /**
      * Displays all Modules in the system.
      */
-    public void viewModuleRecords(){
+    private void viewModuleRecords(){
 
         for (Module module:
                 getModuleRecords()) {
@@ -136,6 +136,7 @@ public class SystemManager {
 
         System.out.println("Welcome to the Student Record System!");
         System.out.println("What would you like to do ?");
+        printMenu();
 
         do{
             userSelection = getUserInt();
@@ -152,13 +153,34 @@ public class SystemManager {
 
 
     }
+
+    /**
+     * Displays to the console the Menu.
+     */
+    private static void printMenu() {
+        String menu = """
+                =========== Student Management System ===========
+                1. Add a new student record
+                2. Add a new module
+                3. Enrol a student to a module
+                4. Add mark for a student in a module
+                5. Display all student records
+                6. Display a specific student record
+                7. Calculate the final mark of a specific student
+                8. Calculate the average mark of all students
+                9. Exit
+                ==================================================
+                """;
+        System.out.println(menu);
+    }
+
     /**
      * Validates a String from the user.
      * Restrictions : Upper to lower case  A - z, and digits from 0 to 9.
      *
      * @return the valid String.
      */
-    public String getUserString(String prompt){
+    private String getUserString(String prompt){
 
         String input;
         boolean isValidInput = false;
@@ -184,7 +206,7 @@ public class SystemManager {
      *
      * @return the validated int.
      */
-    public int getUserInt() {
+    private int getUserInt() {
         int digit = -1;
         boolean isValid;
 
@@ -219,7 +241,7 @@ public class SystemManager {
      * @param <R> Generic Type of the target.       Ex. Integer/String
      * @see Function
      */
-    public static <T, R> boolean validateObject(ArrayList<T> targetList, R target, Function<T, R> getter) {
+    private static <T, R> boolean validateObject(ArrayList<T> targetList, R target, Function<T, R> getter) {
         for (T item : targetList) {
             // Get the value of the property for the current item
             R itemValue = getter.apply(item);
@@ -236,7 +258,7 @@ public class SystemManager {
     }
 
 
-    public void menu(MenuOptions selectedOption) {
+    private void menu(MenuOptions selectedOption) {
 
 
             switch (selectedOption) {
@@ -300,7 +322,7 @@ public class SystemManager {
      * @param name The name for the Student Object.
      * @param studentID The unique identifier for the Student Object.
      */
-    public void createStudent(String name, String studentID){
+    private void createStudent(String name, String studentID){
 
         Student newStudent = new Student(name, studentID);
         getStudentRecords().add(newStudent);
@@ -318,35 +340,62 @@ public class SystemManager {
      * @param moduleName The name for the Module Object.
      * @param moduleID The unique identifier for the Module Object.
      */
-    public void createModule(String moduleName, String moduleID) {
+    private void createModule(String moduleName, String moduleID) {
 
         Module newModule = new Module(moduleName, moduleID);
         getModuleRecords().add(newModule);
         System.out.println("[SYSTEM >>> Module added to records.]");
     }
 
-    public void enrollStudent() {
+    /**
+     * Validates an ID based on the object type and prompt provided.
+     * <p>
+     * This method is used to validate a given ID based on the object type (Student or Module).
+     * It prompts the user to enter the ID and checks if it exists in the corresponding records (student or module records).
+     * If the ID is not found in the records, it prompts the user to re-enter the ID until a valid one is provided.
+     * </p>
+     *
+     * @param objectID The object type (Student or Module) to determine which records to search.
+     * @param prompt   The prompt to be displayed to the user when entering the ID (e.g., "Student ID" or "Module ID").
+     * @param <T>      The generic type representing the object type (Student or Module).
+     * @return The valid ID that exists in the records.
+     * @see Student
+     * @see Module
+     */
+    private <T> String validateID(T objectID, String prompt) {
+        boolean isValid = true;
+        String possibleID = null;
+
+        if (objectID instanceof Student) {
+            while (isValid) {
+                possibleID = getUserString("Insert " + prompt);
+                if (!validateObject(getStudentRecords(), possibleID, Student::getStudentID)) {
+                    System.out.println("[SYSTEM] >>> Student not found.");
+                    isValid = false;
+                }
+            }
+        }
+
+        if (objectID instanceof Module) {
+            while (isValid) {
+                possibleID = getUserString("Insert " + prompt);
+                if (!validateObject(getModuleRecords(), possibleID, Module::getModuleID)) {
+                    System.out.println("[SYSTEM] >>> Module not found.");
+                    isValid = false;
+                }
+            }
+        }
+
+        return possibleID;
+    }
+
+    private void enrollStudent() {
         String studentID = null;
         String moduleID = null;
 
-        boolean validStudent = false;
-        boolean validModule = false;
-
-        while (!validStudent || !validModule) {
-             studentID = getUserString("Insert StudentID: ");
-            if (!validateObject(getStudentRecords(), studentID, Student::getStudentID)) {
-                System.out.println("[SYSTEM] >>> Student not found.");
-            } else {
-                validStudent = true;
-            }
-
-             moduleID = getUserString("Insert ModuleID: ");
-            if (!validateObject(getModuleRecords(), moduleID, Module::getModuleID)) {
-                System.out.println("[SYSTEM] >>> Module not found.");
-            } else {
-                validModule = true;
-            }
-        }
+        // Validate inputs
+        studentID = validateID(studentID, "StudentID");
+        moduleID = validateID(moduleID, "ModuleID");
 
         // GET the object of the specified ID's
         Module module = getModule(moduleID);
@@ -357,4 +406,32 @@ public class SystemManager {
         System.out.println("[SYSTEM] >>> Student" + student.getStudentID() + " enrolled to Module: " +
                 module.getModuleName());
     }
+
+    private void addMark() {
+        String studentID = null;
+        String moduleID = null;
+
+        String markOne;
+        String markTwo;
+
+        // Validate inputs
+        studentID = validateID(studentID, "StudentID");
+        moduleID = validateID(moduleID, "ModuleID");
+
+        // GET the object of the specified ID's
+        Module module = getModule(moduleID);
+        Student student = getStudent(studentID);
+
+        markOne = getUserString("Insert 1st mark for the module: ");
+        markTwo = getUserString("Insert 2nd mark for the module: ");
+
+        double doubleMarkOne = Double.parseDouble(markOne);
+        double doubleMarkTwo = Double.parseDouble(markTwo);
+        if (UtilityMaths.isSumGreaterThanMax(doubleMarkOne, doubleMarkTwo, 200)) {
+            double grade = UtilityMaths.findAverage(doubleMarkOne,doubleMarkTwo);
+            module.addStudent(student, grade);
+        }
+    }
 }
+
+

@@ -7,7 +7,6 @@ public class Main {
 
         while(true){
             system.run();
-
         }
 
     }

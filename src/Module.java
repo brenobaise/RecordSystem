@@ -10,7 +10,7 @@ public class Module {
     private String moduleID;
 
     // Stores students for this module
-    private HashMap<Student, Integer> studentsEnrolled = new HashMap<>();
+    private HashMap<Student, Double> studentsEnrolled = new HashMap<>();
 
             /*  Constructors */
 
@@ -54,7 +54,7 @@ public class Module {
      * Getter for the HashMap storing the Student object and it's grade.
      * @return the HashMap object.
      */
-    public HashMap<Student, Integer> getStudentsEnrolled() {
+    public HashMap<Student, Double> getStudentsEnrolled() {
         return studentsEnrolled;
     }
 
@@ -73,7 +73,7 @@ public class Module {
      * @param student The student to be added.
      * @param grade The grade to be added.
      */
-    public void addStudent(Student student, int grade){
+    public void addStudent(Student student, double grade){
         getStudentsEnrolled().put(student, grade);
     }
 
